@@ -1,5 +1,6 @@
 #libraries used
 import random
+import sys 
 
 def generate_idea():
   #generate a random idea
@@ -41,10 +42,38 @@ def generate_idea():
     "Learn about religion",
     "Learn about politics",
     "Learn about economics",
+    "Learn about economics",
+    "Take a deep breath",
+    "Go play a sport",
+    "Go take a nap!",
+    "Meditate for 1 minute",
+    "relearn old things",
     "Learn about psychology"
   ]
 
   return random.choice(ideas)
 
+def save_idea_to_file(idea, filename="ideas.txt"):
+
+    # Save the generated idea to a file
+    with open(filename, "a") as file:
+        file.write(f"{idea}\n")
+
+def main():
+    if len(sys.argv) > 1 and sys.argv[1] == "--save":
+      
+        idea = generate_idea()
+        save_idea_to_file(idea)
+        print(f"Idea saved to file: {idea}")
+    elif len(sys.argv) > 1 and sys.argv[1] == "--list":
+        try:
+            with open("ideas.txt", "r") as file:
+                print("Saved ideas:")
+                print(file.read())
+        except FileNotFoundError:
+            print("No ideas saved yet.")
+    else:
+        print(generate_idea())
+
 if __name__ == "__main__":
-  print(generate_idea())
+    main()
