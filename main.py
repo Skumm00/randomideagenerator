@@ -209,7 +209,7 @@ def display_user_statistics():
 
 # Manage user profiles
 profiles = {}
-
+#create user profile
 def create_user_profile():
     name = input("Enter profile name: ")
     if name in profiles:
@@ -221,6 +221,76 @@ def create_user_profile():
             "difficulty": "Easy"
         }
         print(f"Profile '{name}' created successfully.")
+#update user profile 
+def update_user_profile():
+    name = input("Enter the profile name to update: ")
+    if name in profiles:
+        print("Select the field to update:")
+        print("1. Category")
+        print("2. User Type")
+        print("3. Difficulty")
+        choice = input("Enter choice (1-3): ")
+        if choice == '1':
+            print_category_menu()
+            category_choice = input("Select category (1-10): ")
+            categories = {
+                "1": "general", "2": "coding", "3": "music", "4": "hobbies", "5": "wellness",
+                "6": "personal_development", "7": "travel", "8": "creative_writing", "9": "technology", "10": "art"
+            }
+            profiles[name]["category"] = categories.get(category_choice, "general")
+            print(f"Profile '{name}' category updated.")
+        elif choice == '2':
+            print_user_type_menu()
+            user_type_choice = int(input("Select user type (1-6): "))
+            profiles[name]["user_type"] = personalizeuser.get(user_type_choice, "Beginner Learner")
+            print(f"Profile '{name}' user type updated.")
+        elif choice == '3':
+            print_difficulty_menu()
+            difficulty_choice = input("Select difficulty level (1-3): ")
+            difficulties = {
+                "1": "Easy", "2": "Medium", "3": "Hard"
+            }
+            profiles[name]["difficulty"] = difficulties.get(difficulty_choice, "Easy")
+            print(f"Profile '{name}' difficulty level updated.")
+        else:
+            print("Invalid choice.")
+    else:
+        print("Profile not found.")
+
+def delete_user_profile():
+    name = input("Enter the profile name to delete: ")
+    if name in profiles:
+        del profiles[name]
+        print(f"Profile '{name}' deleted successfully.")
+    else:
+        print("Profile not found.")
+
+def manage_user_profiles():
+    while True:
+        print("\nUser Profile Management")
+        print("1. Create a new profile")
+        print("2. Update an existing profile")
+        print("3. Delete a profile")
+        print("4. List all profiles")
+        print("5. Return to main menu")
+        choice = input("Enter your choice (1-5): ")
+        if choice == '1':
+            create_user_profile()
+        elif choice == '2':
+            update_user_profile()
+        elif choice == '3':
+            delete_user_profile()
+        elif choice == '4':
+            if profiles:
+                print("\nProfiles:")
+                for name, details in profiles.items():
+                    print(f"Name: {name}, Category: {details['category']}, User Type: {details['user_type']}, Difficulty: {details['difficulty']}")
+            else:
+                print("No profiles found.")
+        elif choice == '5':
+            break
+        else:
+            print("Invalid choice.")
 
 def main():
     while True:
