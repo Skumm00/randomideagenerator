@@ -2,6 +2,17 @@ import random
 import os
 from datetime import datetime
 
+#list of different types of users you are 
+
+personalizeuser = {
+    1,"Beginer Learner",
+    2,"Intermediate Learner",
+    3,"Advanced Learner",
+    4,"Exper Learner",
+    5,"Hard Worker",
+    6,"Pro Learner"
+}
+
 # Expanded list of ideas categorized by type
 ideas = {
     "general": [
@@ -49,15 +60,18 @@ ideas = {
         "Develop a new blog series", "Experiment with different writing styles", "Join a writing group", 
         "Create a personal memoir", "Write and illustrate a children's book", "Try writing flash fiction"
     ],
+    
     "technology": [
         "Build a DIY tech project", "Explore new tech gadgets", "Learn about blockchain technology", 
         "Experiment with virtual reality", "Create a personal tech blog", "Develop a mobile game",
         "Learn about artificial intelligence", "Build a home automation system", "Try out new programming tools", "Attend a tech conference"
     ],
+    
     "art": [
         "Learn digital art techniques", "Create a new sculpture", "Take a graphic design course", 
         "Explore abstract painting", "Create an art installation", "Try mixed media art", 
         "Attend an art workshop", "Explore art history", "Create a custom mural", "Join an art community"
+        
     ]
 }
 
@@ -113,13 +127,47 @@ def clear_saved_ideas(filename="ideas.txt"):
         print("All saved ideas have been cleared.")
     else:
         print("Error. File not found.")
+        main()
 
 def main():
     while True:
         print_home_screen()
         choice = input("Enter your choice (1-5): ")
+        if choice == '1':
+            print_category_menu()
+            category_choice = input("Select category (1-10): ")
+            categories = {
+                "1": "general", "2": "coding", "3": "music", "4": "hobbies", "5": "wellness",
+                "6": "personal_development", "7": "travel", "8": "creative_writing", "9": "technology", "10": "art"
+            }
+            category = categories.get(category_choice, "general")
+            idea = generate_idea(category)
+            print(f"Generated Idea: {idea}")
 
-   
+        elif choice == '2':
+            print_category_menu()
+            category_choice = input("Select category (1-10): ")
+            categories = {
+                "1": "general", "2": "coding", "3": "music", "4": "hobbies", "5": "wellness",
+                "6": "personal_development", "7": "travel", "8": "creative_writing", "9": "technology", "10": "art"
+            }
+            category = categories.get(category_choice, "general")
+            idea = generate_idea(category)
+            save_idea_to_file(idea)
+            print(f"Idea saved to file: {idea}")
+
+        elif choice == '3':
+            list_saved_ideas()
+
+        elif choice == '4':
+            clear_saved_ideas()
+
+        elif choice == '5':
+            print("Exiting the program.")
+            break
+        else:
+            print("Invalid choice. Please enter a number between 1 and 5.")
+
 # Now run the program
 if __name__ == "__main__":
     main()
